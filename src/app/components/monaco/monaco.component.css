@@ -1,0 +1,20 @@
+#content { 
+	overflow:auto; 
+	padding: 5%;
+} 
+  
+#left, #right { 
+	width: 45%; 
+	height: 100%; 
+	margin:3px; 
+	/* padding: 1em;  */
+} 
+  
+#left  { float:left;  }
+#right { float:right; }
+
+.editor-wrapper {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 5%
+}
