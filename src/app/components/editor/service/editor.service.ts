@@ -4,6 +4,7 @@ import { StringChangeRequest } from 'src/app/objects/StringChangeRequest';
 import { HttpClient } from '@angular/common/http';
 import { GlobalConstants } from 'src/app/objects/GlobalConstants';
 import { Queue } from 'src/app/objects/Queue';
+import { Document } from 'src/app/objects/Document';
 import { MonacoRange } from 'src/app/objects/MonacoRange';
 import { OperationalTransformationService } from './ot/operational-transformation.service';
 import { Component, OnInit } from '@angular/core';
@@ -26,7 +27,7 @@ export class EditorService {
     pendingChangeQueue: Queue<StringChangeRequest>;
 
     // TODO gotta be better/more proper way to do this. this outputs event on init when i dont want it to.
-    stringChangeRequestSubject: BehaviorSubject<StringChangeRequest> = new BehaviorSubject(new StringChangeRequest("", "", -1, new MonacoRange(-1, -1, -1, -1), 1));
+    stringChangeRequestSubject: BehaviorSubject<StringChangeRequest> = new BehaviorSubject(new StringChangeRequest("", "", -1, new MonacoRange(-1, -1, -1, -1), -1 ,1));
 
     /* ----------------- FLAGS ----------------- */
     // flag to halt sending of change requests until response arrives from earlier response
@@ -56,11 +57,11 @@ export class EditorService {
         this.clientIdentity = -1;
 
         this.cacheIdentity();
-        this.cacheRevId();
+        // this.cacheRevId();
     }
 
     public cacheIdentity(): void {
-        this.http.get<number>(this.serverIP + "/identity").subscribe(response => {
+        this.http.get<number>(this.serverIP + "/api/ot/identity").subscribe(response => {
             this.clientIdentity = response;
             this.isAwaitingIdentityResponse = false;
         },
@@ -69,8 +70,8 @@ export class EditorService {
         });
     }
 
-    public cacheModel(): Observable<string> {
-        return this.http.get(this.serverIP + "/model", {responseType: 'text'}).pipe(tap(response => {
+    public cacheModel(id: number): Observable<string> {
+        return this.http.get(this.serverIP + "/api/ot/model/" + id, {responseType: 'text'}).pipe(tap(response => {
             this.isAwaitingModelResponse = false;
         },
         err => {
@@ -78,8 +79,17 @@ export class EditorService {
         }));
     }
 
-    public cacheRevId(): void {
-        this.http.get<number>(this.serverIP + "/revId").subscribe(response => {
+    public getDocument(id: number, password: string): Observable<Document> {
+        return this.http.get<Document>(this.serverIP + "/api/document/" + id + "?password=" + password).pipe(tap(response => {
+            
+        },
+        err => {
+            console.log("Get document has failed: " + err);
+        }));
+    }
+
+    public cacheRevId(id: number): void {
+        this.http.get<number>(this.serverIP + "/api/ot/revId/" + id).subscribe(response => {
             this.otService.revID = response
             this.isAwaitingRevIdResponse = false;
         },
@@ -91,7 +101,7 @@ export class EditorService {
     public sendOperation(request: StringChangeRequest | undefined): void {
         if (request != undefined) {
             this.isAwaitingChangeResponse = true;
-            this.http.post<number>(this.serverIP + "/change", request).subscribe(response => {
+            this.http.post<number>(this.serverIP + "/api/ot/change", request).subscribe(response => {
                 this.otService.revID = response;
                 this.isAwaitingChangeResponse = false;
                 this.sendNextChangeRequest();

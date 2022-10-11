@@ -16,10 +16,13 @@ export class WebsocketService {
     serverIP: string;
 
     // URI to recieve from websocket
-    incomingURI: string = "/broker/string-change-request";
+    // incomingURI: string = "/broker/string-change-request";
+    incomingURI: string = "/broker/";
 
     // websocket client
     stompClient: any;
+
+    cachedDocumentId: number = -1;
 
     constructor(private editorService: EditorService, private otService: OperationalTransformationService) {
         if (isDevMode()) {
@@ -36,13 +39,14 @@ export class WebsocketService {
         }  
     }
 
-    public connectWebSocket(): void {
+    public connectWebSocket(id: number): void {
+        this.cachedDocumentId = id;
         let socket = new SockJS(this.serverIP + '/ws');
         this.stompClient = Stomp.over(socket);
         this.stompClient.debug = GlobalConstants.disableStompLogging;
         const _this = this;
         _this.stompClient.connect({}, function (frame: any) {
-            _this.stompClient.subscribe(_this.incomingURI, function (event: any) {
+            _this.stompClient.subscribe(_this.incomingURI + id, function (event: any) {
                 _this.recieveFromWebSocket(event);
             });
         }, this.errorFromWebSocket);
@@ -59,7 +63,7 @@ export class WebsocketService {
         console.log("APISocket error: " + error);
         setTimeout(() => {
             console.log("Attemping to reconnect to the server via web socket.");
-            this.connectWebSocket();
+            this.connectWebSocket(this.cachedDocumentId);
         }, 5000);
     }
 }

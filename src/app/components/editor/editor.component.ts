@@ -16,9 +16,11 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 export class EditorComponent implements OnInit {
 
     // configurations for monaco editor
-    editorOptions = {theme: 'vs-dark', language: 'java'};
+    editorOptions = {quickSuggestions: false,theme: 'vs-dark', language: 'java'};
     model: NgxEditorModel = {value : ''};
     editor: any;
+    documentId: number;
+    documentPassword: string;
 
     // This subscription manages changes found on the local editor
     localEditorChangeSubscription: any;
@@ -28,16 +30,25 @@ export class EditorComponent implements OnInit {
 
     constructor(private editorService: EditorService, private otService: OperationalTransformationService, private websocketService: WebsocketService) { 
         this.isProgrammaticChange = false; 
+        this.documentId = 5;
+        this.documentPassword = 'test'; 
     }
 
     ngOnInit(): void {
+        this.editorService.getDocument(this.documentId, this.documentPassword).subscribe(response => {
+            console.log(response);
+            this.editor.getModel().setValue(response.model);
+        },
+        err => {
+            console.log("Get docuemnt has failed: " + err);
+        });
+        this.editorService.cacheRevId(this.documentId);
         this.connectWebsocket();
     }
 
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
         this.editor = editorInit;
-
-        this.editorService.cacheModel().subscribe(response => {
+        this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
             this.isProgrammaticChange = true;
             
             this.editor.getModel()?.applyEdits([{
@@ -62,7 +73,7 @@ export class EditorComponent implements OnInit {
     }
 
     connectWebsocket(): void {
-        this.websocketService.connectWebSocket();
+        this.websocketService.connectWebSocket(this.documentId);
     }
 
     disconnectWebsocket(): void {
@@ -71,30 +82,34 @@ export class EditorComponent implements OnInit {
 
     subscriptions(): void {
         // This subscription manages incoming changes from other clients
-        this.editorService.stringChangeRequestSubject.subscribe(operation => {
+        this.editorService.stringChangeRequestSubject.subscribe((operation: StringChangeRequest) => {
             // TODO change to other method
-            let transformed: StringChangeRequest[] = this.otService.transform(operation);
-            for (var request of transformed) {
-                this.otService.insertRequestIntoHistory(request);
-                this.isProgrammaticChange = true;
-                this.editor.getModel()?.applyEdits([{
-                    forceMoveMarkers: true,
-                    range: {
-                        startLineNumber: request.range.startLineNumber,
-                        endLineNumber: request.range.endLineNumber,
-                        startColumn: request.range.startColumn,
-                        endColumn: request.range.endColumn,
-                    },
-                    text: request.text
-                }]);
-                this.isProgrammaticChange = false;
-            }
-        }, err => {
+            if (operation.documentId !== -1) {
+                let transformed: StringChangeRequest[] = this.otService.transform(operation);
+                for (var request of transformed) {
+                    this.otService.insertRequestIntoHistory(request);
+                    this.isProgrammaticChange = true;
+                    this.editor.getModel()?.applyEdits([{
+                        forceMoveMarkers: true,
+                        range: {
+                            startLineNumber: request.range.startLineNumber,
+                            endLineNumber: request.range.endLineNumber,
+                            startColumn: request.range.startColumn,
+                            endColumn: request.range.endColumn,
+                        },
+                        text: request.text
+                    }]);
+                    this.isProgrammaticChange = false;
+                }
+            } 
+            
+        }, (err: any) => {
             console.log(err);
         });
 
         // This subscription manages changes found on the local editor
         this.localEditorChangeSubscription = this.editor.getModel().onDidChangeContent((event: monaco.editor.IModelContentChangedEvent) => { 
+            console.log(this.editor.getValue());
             let opRange: monaco.IRange = event.changes[0].range;
             let request: StringChangeRequest = new StringChangeRequest(
                 new Date().toISOString(), 
@@ -105,7 +120,10 @@ export class EditorComponent implements OnInit {
                     opRange.startColumn, 
                     opRange.endLineNumber, 
                     opRange.startLineNumber), 
-                this.otService.revID);
+                this.otService.revID,
+                this.documentId,
+                0,
+                this.documentPassword);
 
             this.otService.insertRequestIntoHistory(request);
             if (!this.isProgrammaticChange) {

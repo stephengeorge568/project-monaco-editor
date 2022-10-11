@@ -102,6 +102,7 @@ export class MonacoRangeService {
                 next.identity,
                 new MonacoRange(next.range.endColumn, next.range.startColumn, next.range.endLineNumber, next.range.startLineNumber),
                 next.revID,
+                next.documentId,
                 next.setID);
                 
             otherNext.text = "";
