@@ -1,0 +1,22 @@
+form {
+	display: flex;
+	flex-direction: column;
+	width: 200px;
+}
+
+.container {
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+	padding-top: 100px;
+}
+
+.button-container button {
+	margin-top: 5px;
+	width: 50%;
+}
+
+.button-container {
+	display: flex;
+  	justify-content: center;
+}
