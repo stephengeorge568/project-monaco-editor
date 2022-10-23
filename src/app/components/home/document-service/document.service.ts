@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalConstants } from 'src/app/objects/GlobalConstants';
 import { OpenDocumentRequest } from 'src/app/objects/OpenDocumentRequest';
 import { GetDocumentMetaResponse } from 'src/app/objects/GetDocumentMetaResponse';
+import { CreateDocumentRequest } from 'src/app/objects/CreateDocumentRequest';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +36,11 @@ export class DocumentService {
     if (!this.idPassMap.has(id)) {
       this.idPassMap.set(id, password);
     }
+  }
+
+  public createDocument(password: string, name: string, type: string): Observable<number> {
+    let request: CreateDocumentRequest = new CreateDocumentRequest(password, name, type);
+    return this.http.post<number>(this.serverIP + "/api/document", request);
   }
   
 }
