@@ -7,6 +7,9 @@ import { EditorService } from './service/editor.service';
 import { OperationalTransformationService } from './service/ot/operational-transformation.service';
 import { WebsocketService } from './service/websocket-service/websocket.service';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { DocumentService } from '../home/document-service/document.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Input } from '@angular/core';
 
 @Component({
     selector: 'app-editor',
@@ -19,8 +22,8 @@ export class EditorComponent implements OnInit {
     editorOptions = {quickSuggestions: false,theme: 'vs-dark', language: 'java'};
     model: NgxEditorModel = {value : ''};
     editor: any;
-    documentId: number;
-    documentPassword: string;
+    @Input() documentId: number = 0;
+    @Input() documentPassword: string = '';
 
     // This subscription manages changes found on the local editor
     localEditorChangeSubscription: any;
@@ -28,10 +31,13 @@ export class EditorComponent implements OnInit {
     // Flag to detect what changes are programmatic and which are manual and local 
     isProgrammaticChange: boolean;
 
-    constructor(private editorService: EditorService, private otService: OperationalTransformationService, private websocketService: WebsocketService) { 
+    constructor(private editorService: EditorService, 
+                private otService: OperationalTransformationService, 
+                private websocketService: WebsocketService,
+                private documentService: DocumentService,
+                private route: ActivatedRoute,
+                private router: Router) { 
         this.isProgrammaticChange = false; 
-        this.documentId = 5;
-        this.documentPassword = 'test'; 
     }
 
     ngOnInit(): void {
@@ -40,7 +46,7 @@ export class EditorComponent implements OnInit {
             this.editor.getModel().setValue(response.model);
         },
         err => {
-            console.log("Get docuemnt has failed: " + err);
+            console.log("Get document has failed: " + err);
         });
         this.editorService.cacheRevId(this.documentId);
         this.connectWebsocket();

@@ -10,7 +10,10 @@ const routes: Routes = [
   // { path: 'monaco/editor', component: EditorComponent, pathMatch: 'full' },
   // { path: 'monaco', component: MonacoComponent, pathMatch: 'full' },
   // { path: '**', component: MonacoComponent }
-  { path: '**', component: HomeComponent }
+  // { path: '**', redirectTo: 'home' },
+  { path: 'home', component: HomeComponent },
+  { path: 'document/:id', component: MonacoComponent },
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({

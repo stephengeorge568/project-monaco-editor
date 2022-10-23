@@ -3,8 +3,8 @@
 	<form [formGroup]="documentForm" (ngSubmit)="onSubmit()" >
 		<label for="id">Document Id: </label>
  	    <input id="id" type="text" formControlName="documentId">
-		<label for="password">Document Password: </label>
- 	    <input id="password" type="text" formControlName="documentPassword">
+		<!-- <label for="password">Document Password: </label>
+ 	    <input id="password" type="text" formControlName="documentPassword"> -->
 		<div class="button-container">
 			<button type="submit" [disabled]="!documentForm.valid">Submit</button>
 		</div>
