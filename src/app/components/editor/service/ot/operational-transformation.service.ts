@@ -133,7 +133,6 @@ export class OperationalTransformationService {
                             newEC = newSC;
                         }
                     }
-
                 }
             }
 

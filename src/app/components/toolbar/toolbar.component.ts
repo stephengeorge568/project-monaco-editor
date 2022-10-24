@@ -18,8 +18,8 @@ export class ToolbarComponent implements OnInit {
 				`github`,
 				this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/github.svg")
 			).addSvgIcon(
-				`yacht`,
-				this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/yacht.svg")
+				`monaco`,
+				this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/projet-monaco.svg")
 			);
 	}
   

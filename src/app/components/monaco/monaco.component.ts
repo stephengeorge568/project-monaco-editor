@@ -26,7 +26,7 @@ export class MonacoComponent implements OnInit {
 
   constructor(private documentService: DocumentService,
               private route: ActivatedRoute,
-              private router: Router) {    
+              private router: Router) {                 
                 this.getMetadata();
   }
 
@@ -55,17 +55,18 @@ export class MonacoComponent implements OnInit {
   }
 
   authenticate(): void {
+        this.documentPassword = this.documentForm.value.documentPassword;
         this.documentService.openDocument(this.documentId, this.documentForm.value.documentPassword).subscribe(
-        response => {
-            this.isDocumentAuthenticated = true;
-        },
-        (err: HttpErrorResponse) => {
-          if (err.status == 401) {
-            // Password wrong
-          } else if (err.status == 404) {
-            // Document not in DB or filesystem
+          response => {
+              this.isDocumentAuthenticated = true;
+          },
+          (err: HttpErrorResponse) => {
+            if (err.status == 401) {
+              // Password wrong
+            } else if (err.status == 404) {
+              // Document not in DB or filesystem
+            }
           }
-        }
       );
   }
 

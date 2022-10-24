@@ -1,18 +1,29 @@
-<p *ngIf="this.documentMetadata != undefined && isDocumentFound">{{this.documentMetadata.filename}}</p>
-<div class="container" *ngIf="!isDocumentAuthenticated">
-	<form [formGroup]="documentForm" (ngSubmit)="authenticate()" >
-		<label for="id">Document Id: </label>
- 	    <input id="id" type="text" [defaultValue]="this.documentId" readonly>
-		<label for="password">Document Password: </label>
- 	    <input id="password" type="text" formControlName="documentPassword">
-		<div class="button-container">
-			<button type="submit" [disabled]="!documentForm.valid">Submit</button>
-		</div>
-	</form>
+<div class="background">
+	<!-- Document metadata header -->
+	<div class="file-metadata" *ngIf="this.documentMetadata != undefined && isDocumentFound">
+		<p>{{this.documentMetadata.filename}}.{{this.documentMetadata.filetype}}</p>
+		<p>{{this.documentMetadata.id}}</p>
+	</div>
+
+	<!--  Document authentication form -->
+	<div class="container" *ngIf="!isDocumentAuthenticated">
+		<form [formGroup]="documentForm" (ngSubmit)="authenticate()" >
+			<label for="id">Document Id: </label>
+			<input id="id" type="text" [defaultValue]="this.documentId" readonly>
+			<label for="password">Document Password: </label>
+			<input id="password" type="text" formControlName="documentPassword">
+			<div class="button-container">
+				<button type="submit" [disabled]="!documentForm.valid">Submit</button>
+			</div>
+		</form>
+	</div>
+
+	<!--  Document editor -->
+	<div class="editor-wrapper" *ngIf="isDocumentAuthenticated">
+		<app-editor [documentId]="documentId" [documentPassword]="documentPassword"></app-editor>
+	</div>
 </div>
-<div class="editor-wrapper" *ngIf="isDocumentAuthenticated">
-	<app-editor [documentId]="documentId" [documentPassword]="documentPassword"></app-editor>
-</div>
+
 
 
 

@@ -1,14 +1,24 @@
 <mat-toolbar class="toolbar">
 	<div class="container">
-		<div class="bar-text child">
-			<mat-icon class="yacht-icon" svgIcon="yacht"></mat-icon>
-			<span><b>Project Monaco</b><small class="author-tag">by Stephen George</small></span>
+		<div class="">
+			<!-- <span><b>Project Monaco</b><small class="author-tag">by Stephen George</small></span> -->
+			<!-- <img src="/assets/project-monaco-transparent.png" alt="Project Monaco logo" width="160px" height="40px"> -->
+			<img src="/assets/project-monaco-transparent.png" alt="Project Monaco logo" width="240px" height="60px">
 		</div>
-			
-	<div class="child">
+		<input id="menu-toggle" type="checkbox" />
+		<label class='menu-button-container' for="menu-toggle">
+		<div class='menu-button'></div>
+		</label>
+		<ul class="menu">
+			<li>Home</li>
+			<li>Author</li>
+			<li>Github</li>
+		</ul>
+	</div>		
+	<!-- <div class="child">
 		<button class="github-icon" mat-icon-button aria-label="My Github Page" (click)="goToPersonalGithub()">
 			<mat-icon svgIcon="github"></mat-icon>
 		</button>
 		</div>
-	</div>
+	</div> -->
 </mat-toolbar>

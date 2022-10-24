@@ -1,33 +1,29 @@
-#content { 
-	overflow:auto; 
-	padding: 5%;
-} 
-  
-#left, #right { 
-	width: 45%; 
-	height: 100%; 
-	margin:3px; 
-	/* padding: 1em;  */
-} 
-  
-#left  { float:left;  }
-#right { float:right; }
-
 .editor-wrapper {
 	margin-left: 10%;
 	margin-right: 10%;
-	margin-top: 5%
 }
 
 .container {
 	display: flex;
   	align-items: center;
   	justify-content: center;
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 form {
 	display: flex;
 	flex-direction: column;
 	width: 200px;
+}
+
+.background {
+	background-color: #16171B;
+	height: 100%;
+	color: white;
+}
+
+.file-metadata {
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
 }
