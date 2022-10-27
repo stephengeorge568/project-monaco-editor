@@ -1,0 +1,37 @@
+<div class="wrapper">
+	<div class="container">
+		<h2>Open Document</h2>
+		<form [formGroup]="documentForm" (ngSubmit)="onSubmit()" >
+			<label for="id">Document Id: </label>
+			 <input id="id" type="text" formControlName="documentId">
+			<!-- <label for="password">Document Password: </label>
+			 <input id="password" type="text" formControlName="documentPassword"> -->
+			<div class="button-container">
+				<button type="submit" [disabled]="!documentForm.valid">Submit</button>
+			</div>
+		</form>
+	</div>
+	<div class="container test">
+		<h2>Create Document</h2>
+		<form [formGroup]="createDocumentForm" (ngSubmit)="onCreateSubmit()" >
+			<label for="id">Name: </label>
+			<input id="id" type="text" formControlName="documentName" required>
+			<label for="type">File type: </label>
+			 <select id="type" type="text" formControlName="documentType" required>
+				<option value="java">Java</option>
+				<option value="ts">Typescript</option>
+				<option value="c">C</option>
+				<option value="cpp">C++</option>
+				<option value="py">Python</option>
+				<option value="html">HTML</option>
+				<option value="css">CSS</option>
+				<option value="js">Javascript</option>
+			</select>
+			<label for="password">Password (remember this!): </label>
+			 <input id="password" type="text" formControlName="documentPassword" required>
+			<div class="button-container">
+				<button type="submit" [disabled]="!createDocumentForm.valid || awaitingCreateResponse">Submit</button>
+			</div>
+		</form>
+	</div>
+</div>

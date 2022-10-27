@@ -1,0 +1,22 @@
+.editor {
+     min-width: 100%;
+    width: 100%;
+	min-height: 80vh; 
+}
+
+.container {
+	/* margin-top: 10%; */
+	/* padding: 5%; */
+    /* width: 50vw; 
+    height: 80vh;  */
+    background-color: #0D0D0D;
+    padding: 20px;
+	/* height: 100%; */
+}
+
+.documentInformation {
+    background-color: grey;
+    display: flex;
+    width: 20%;
+    height: 40%
+}

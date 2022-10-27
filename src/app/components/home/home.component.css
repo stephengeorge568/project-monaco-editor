@@ -1,0 +1,38 @@
+form {
+	display: flex;
+	flex-direction: column;
+
+	width: 200px;
+}
+
+.test {
+	background-color: #2F76DB;
+}
+
+.container {
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+	padding-top: 100px;
+	color: white;
+}
+
+.button-container button {
+	margin-top: 5px;
+	width: 50%;
+}
+
+.button-container {
+	display: flex;
+  	justify-content: center;
+}
+
+.wrapper {
+	background-color: #16171B;
+	height: 100%;
+}
+
+
+
+
+
