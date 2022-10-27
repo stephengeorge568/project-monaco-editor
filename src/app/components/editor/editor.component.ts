@@ -54,6 +54,7 @@ export class EditorComponent implements OnInit {
 
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
         this.editor = editorInit;
+        this.editor.getModel()?.updateOptions({insertSpaces: false});
         this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
             this.isProgrammaticChange = true;
             
