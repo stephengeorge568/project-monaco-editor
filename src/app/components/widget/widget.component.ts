@@ -13,6 +13,7 @@ export class WidgetComponent implements OnInit {
 
   @Input() widgetType: string = "";
   @Input () widgetTypeDownload: boolean = true;
+  @Input () buttonToggle: boolean = false
   @Input () widgetTypeCollaborator: boolean = true;
 
   

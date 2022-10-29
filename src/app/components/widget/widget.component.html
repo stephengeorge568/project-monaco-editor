@@ -2,8 +2,10 @@
 	DOWLOAD WIDGET
 -->
 <div  *ngIf="widgetTypeDownload" class="widgetDownload" >
-	Download
-<div>
+	<Button (click)="buttonToggle == !buttonToggle" >Download File</Button>
+	<div>{{buttonToggle}}</div>
+</div>
+
 <!--
 	Collaborator WIDGET
 -->
