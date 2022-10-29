@@ -12,7 +12,10 @@ import { DocumentService } from '../home/document-service/document.service';
 export class WidgetComponent implements OnInit {
 
   @Input() widgetType: string = "";
+  @Input() widgetTypeScoreboard: boolean = true;
+  @Input() widgetTypeName: boolean = true;
   @Input() documentText: string = "!!!!DOCUMENT TEXT SHOULD BE HERE!!!!";
+  @Input() documentName: string = "HelloWorld.java"
   @Input () widgetTypeDownload: boolean = true;
   @Input () buttonToggle: boolean = false
   @Input () widgetTypeCollaborator: boolean = true;

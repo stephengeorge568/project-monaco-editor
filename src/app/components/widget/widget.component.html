@@ -1,14 +1,31 @@
+<div class="topHeader" >
+<!--
+	DOCUMENT NAME WIDGET
+-->
+	<div  *ngIf="widgetTypeName" class="widgetName" >
+		{{documentName}}
+	</div>
+</div>
 <!--
 	DOWLOAD WIDGET
 -->
 <div  *ngIf="widgetTypeDownload" class="widgetDownload" >
 	<Button (click)="downloadDocument()" >Download FILE</Button>
-	<div>{{buttonToggle}}</div>
+	
+</div>
+<!--
+	s!!!TEMPORARY!!!
+-->
+<div  *ngIf="widgetTypeName" class="fakeEditor" >
+	EDITOR HERE
 </div>
 
 <!--
-	Collaborator WIDGET
+	DOCUMENT STATS WIDGET
 -->
-<div  *ngIf="widgetTypeCollaborator" class="widgetCollaborator" >
-	Collaborator
+<div  *ngIf="widgetTypeScoreboard" class="widgetScoreboard" >
+	Words      : <br>
+	Statements :<br>
+	Size       :<br>
+	Collaborators : <br>
 <div>

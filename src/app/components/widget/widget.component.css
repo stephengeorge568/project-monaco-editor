@@ -1,24 +1,64 @@
+.topHeader{
+	width: 100%;
+	background-color: black;
+	flex-direction: row;
+
+}
 .widgetDownload{
 	display: flex;
     background-color: grey;
-	flex-direction: row;
-    padding: 10%;
+	flex-direction: row-reverse;
+    padding: 2%;
+    width: 5%;
+    height: 5%;
+	margin: 5%
+}
+.fakeEditor {
+	display: flex;
+    background-color: grey;
+	flex-direction: row-reverse;
+
+    padding: 1%;
     width: 20%;
-    height: 10%
+    height: 80%;
+	margin: 3%
+
 }
 .widgetCollaborator{
 	display: flex;
     background-color: grey;
-	flex-direction: row;
-    padding: 10%;
+	
+    padding: 1%;
     width: 10%;
-    height: 20%
-}
+    height: 20%;
+	margin: 5%
 
+
+}
+.widgetName{
+	display: flex;
+    background-color: grey;
+    padding: 1%;
+    width: 20%;
+    height: 3%;
+	margin: 5%
+}
+.widgetScoreboard{
+	display: flex;
+    background-color: grey;
+	flex-direction: row;
+    padding: 1%;
+    width: 10%;
+    height: 20%;
+	margin: 5%
+
+}
 .documentInformationEntry {
 	display: flex;
     background-color: white;
 	flex-direction: row;
     width: 10%;
-    height:10%
+    height:10%;
+	margin: 5%
+
 }
