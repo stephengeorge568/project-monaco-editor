@@ -4,6 +4,7 @@ import { EditorComponent, MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-
 import { MonacoComponent } from './components/monaco/monaco.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { WidgetComponent } from './components/widget/widget.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'monaco', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   // { path: '**', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
   { path: 'document/:id', component: MonacoComponent },
-  { path: '**', redirectTo: 'home' },
+  {path: 'test', component: WidgetComponent},
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

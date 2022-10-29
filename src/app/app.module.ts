@@ -19,6 +19,7 @@ import { HomeComponent } from './components/home/home.component';
 import {MatSelectModule} from '@angular/material/select';
 import { DocumentInfoComponent } from './components/document-info/document-info.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { WidgetComponent } from './components/widget/widget.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
   baseUrl: 'OT-editor/assets', // configure base path cotaining monaco-editor directory after build default: './assets'
@@ -34,6 +35,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     ToolbarComponent,
     HomeComponent,
     DocumentInfoComponent,
+    WidgetComponent,
   ],
   imports: [
     MatDialogModule,
