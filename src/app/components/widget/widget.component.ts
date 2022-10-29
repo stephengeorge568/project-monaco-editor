@@ -12,6 +12,7 @@ import { DocumentService } from '../home/document-service/document.service';
 export class WidgetComponent implements OnInit {
 
   @Input() widgetType: string = "";
+  @Input() documentText: string = "!!!!DOCUMENT TEXT SHOULD BE HERE!!!!";
   @Input () widgetTypeDownload: boolean = true;
   @Input () buttonToggle: boolean = false
   @Input () widgetTypeCollaborator: boolean = true;
@@ -30,6 +31,19 @@ export class WidgetComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  downloadDocument(): void{
+  
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      let file = new Blob([this.documentText],{type: 'txt'});
+      let url = window.URL.createObjectURL(file)
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'test');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  
+  }
   getMetadata(): void {
     let idParam = this.route.snapshot.paramMap.get('id');
     if (idParam !== null) {
