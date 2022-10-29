@@ -1,13 +1,24 @@
-.widget{
+.widgetDownload{
+	display: flex;
     background-color: grey;
-    display: flex;
+	flex-direction: row;
+    padding: 10%;
     width: 20%;
-    height: 40%
+    height: 10%
+}
+.widgetCollaborator{
+	display: flex;
+    background-color: grey;
+	flex-direction: row;
+    padding: 10%;
+    width: 10%;
+    height: 20%
 }
 
 .documentInformationEntry {
+	display: flex;
     background-color: white;
-    display: flex;
-    width: 100%;
+	flex-direction: row;
+    width: 10%;
     height:10%
 }

@@ -12,6 +12,9 @@ import { DocumentService } from '../home/document-service/document.service';
 export class WidgetComponent implements OnInit {
 
   @Input() widgetType: string = "";
+  @Input () widgetTypeDownload: boolean = true;
+  @Input () widgetTypeCollaborator: boolean = true;
+
   
   documentId: number = -1;
   documentPassword: string = '';
