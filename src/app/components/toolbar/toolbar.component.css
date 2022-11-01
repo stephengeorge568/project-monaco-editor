@@ -28,12 +28,23 @@ white FBFBFB
 
 */
 
+.logo {
+	position: absolute;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+}
+
 /* Drop down menu */
 .menu {
+	position: inherit;
 	display: flex;
 	flex-direction: row;
 	list-style-type: none;
-	margin: 0;
+	/* margin: 0; */
+	margin-left: auto;
+	margin-right: 0;
 	padding: 0;
   }
   
@@ -44,6 +55,9 @@ white FBFBFB
   
   .menu-button-container {
 	display: none;
+	margin: auto;
+	margin-left: auto;
+	margin-right: 10px;
 	height: 100%;
 	width: 30px;
 	cursor: pointer;
@@ -92,7 +106,7 @@ white FBFBFB
 	transform: rotate(-405deg);
   }
   
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
 	.menu-button-container {
 	  display: flex;
 	}
