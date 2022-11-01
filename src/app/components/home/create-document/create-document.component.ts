@@ -1,0 +1,56 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { DocumentInfoComponent } from '../../document-info/document-info.component';
+import { DocumentService } from '../document-service/document.service';
+
+@Component({
+  selector: 'app-create-document',
+  templateUrl: './create-document.component.html',
+  styleUrls: ['./create-document.component.css']
+})
+export class CreateDocumentComponent implements OnInit {
+
+  awaitingCreateResponse: boolean = false;
+
+  // TODO unnecessary. Just reset form on dialog close
+  lastCreatedId?: number;
+  lastCreatedPassword?: string;
+
+  createDocumentForm = new FormGroup({
+    documentName: new FormControl(''),
+    documentType: new FormControl(''),
+    documentPassword: new FormControl(''),
+  });
+
+  constructor(private documentService: DocumentService, private router: Router, public dialog: MatDialog) { }
+
+  ngOnInit(): void {
+  }
+
+  onCreateSubmit() {
+    this.awaitingCreateResponse = true;
+    this.documentService.createDocument(this.createDocumentForm.value.documentPassword, 
+                                        this.createDocumentForm.value.documentName, 
+                                        this.createDocumentForm.value.documentType).subscribe(
+      response => {
+        this.awaitingCreateResponse = false;
+        this.lastCreatedId = response;
+        this.lastCreatedPassword = this.createDocumentForm.value.documentPassword;
+        this.createDocumentForm.reset();
+        let dialogRef = this.dialog.open(DocumentInfoComponent, {
+          data: {
+            id: this.lastCreatedId,
+            password: this.lastCreatedPassword
+          },
+        });
+      }, 
+      (err: HttpErrorResponse) => {
+        this.awaitingCreateResponse = false;
+      }
+    );
+}
+
+}

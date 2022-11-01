@@ -1,0 +1,14 @@
+<div class="container">
+	<!-- <h2>Open Document</h2> -->
+	<form [formGroup]="documentForm" (ngSubmit)="onSubmit()" >
+		<mat-form-field [formGroup]="documentForm" appearance="outline">
+			<mat-label>Document ID</mat-label>
+			<input matInput placeholder="Ex: 12" formControlName="documentId" required>
+			<mat-error *ngIf="this.documentForm.valid">Please enter a positive integer ID.</mat-error>
+		</mat-form-field>
+		<div class="button-container">
+			<button  type="submit" [disabled]="!documentForm.valid">Open Document</button>
+		</div>
+	</form>
+	
+</div>

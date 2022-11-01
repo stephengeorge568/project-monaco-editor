@@ -14,7 +14,7 @@ form {
   	align-items: center;
   	justify-content: center;
 	padding-top: 100px;
-	color: var(--text-white);
+	color: white;
 }
 
 .button-container button {
@@ -26,13 +26,3 @@ form {
 	display: flex;
   	justify-content: center;
 }
-
-.wrapper {
-	background-color: var(--less-dark);
-	height: 100%;
-}
-
-
-
-
-

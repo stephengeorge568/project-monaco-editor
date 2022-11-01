@@ -2,7 +2,7 @@
     height: 80px;
 	background: #0D0D0D;
 	box-shadow: 0px 4px 4px rgba(44, 125, 255, 0.4);
-	color: #c9c9c9;
+	color: var(--text-white);
 
 	/* position: fixed;
     position: -webkit-sticky; /* For macOS/iOS Safari 
