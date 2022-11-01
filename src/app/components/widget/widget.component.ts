@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetDocumentMetaResponse } from 'src/app/objects/GetDocumentMetaResponse';
 import { DocumentService } from '../home/document-service/document.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-widget',
@@ -21,10 +22,16 @@ export class WidgetComponent implements OnInit {
   @Input () widgetTypeCollaborator: boolean = true;
 
   
+  documentForm = new FormGroup({
+    documentPassword: new FormControl(''),
+  });
+  isDocumentAuthenticated: boolean = false;
   documentId: number = -1;
-  documentPassword: string = '';
+  documentPassword: string = 'test';
   documentMetadata?: GetDocumentMetaResponse;
   isDocumentFound: boolean = false;
+
+
   constructor(private documentService: DocumentService,
     private route: ActivatedRoute,
     private router: Router) {
@@ -34,6 +41,7 @@ export class WidgetComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
   downloadDocument(): void{
   
       const link = document.createElement('a');
@@ -47,8 +55,10 @@ export class WidgetComponent implements OnInit {
       link.remove();
   
   }
+
   getMetadata(): void {
-    let idParam = this.route.snapshot.paramMap.get('id');
+  //  let idParam = this.route.snapshot.paramMap.get('id');
+    let idParam = 11;
     if (idParam !== null) {
       this.documentId = Number(idParam);
         this.documentService.getDocumentMetaData(this.documentId).subscribe(
@@ -57,6 +67,7 @@ export class WidgetComponent implements OnInit {
           this.documentMetadata = response;
         }, 
         (err: HttpErrorResponse) => {
+          console.log(err);
           this.isDocumentFound = false;
         }
       );
@@ -66,6 +77,23 @@ export class WidgetComponent implements OnInit {
         this.isDocumentFound = false;
         // this.router.navigate(['/home']);
     }
+    console.log(this.isDocumentFound);
   }
+
+  authenticate(): void {
+    this.documentPassword = this.documentForm.value.documentPassword;
+    this.documentService.openDocument(this.documentId, this.documentForm.value.documentPassword).subscribe(
+      response => {
+          this.isDocumentAuthenticated = true;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.status == 401) {
+          // Password wrong
+        } else if (err.status == 404) {
+          // Document not in DB or filesystem
+        }
+      }
+  );
+}
 
 }
