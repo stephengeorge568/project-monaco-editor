@@ -1,23 +1,34 @@
-<div class="container test">
-	<h2>Create Document</h2>
+<div class="container">
+	<!-- <h2>Create Document</h2> -->
 	<form [formGroup]="createDocumentForm" (ngSubmit)="onCreateSubmit()" >
-		<label for="id">Name: </label>
-		<input id="id" type="text" formControlName="documentName" required>
-		<label for="type">File type: </label>
-		 <select id="type" type="text" formControlName="documentType" required>
-			<option value="java">Java</option>
-			<option value="ts">Typescript</option>
-			<option value="c">C</option>
-			<option value="cpp">C++</option>
-			<option value="py">Python</option>
-			<option value="html">HTML</option>
-			<option value="css">CSS</option>
-			<option value="js">Javascript</option>
-		</select>
-		<label for="password">Password (remember this!): </label>
-		 <input id="password" type="text" formControlName="documentPassword" required>
-		<div class="button-container">
-			<button type="submit" [disabled]="!createDocumentForm.valid || awaitingCreateResponse">Submit</button>
+		<mat-form-field [formGroup]="createDocumentForm" appearance="outline">
+			<mat-label>Filename</mat-label>
+			<input matInput placeholder="Ex: ThisIsMyFileName" formControlName="documentName" required>
+			<mat-error *ngIf="this.createDocumentForm.valid">Only use letters, numbers, dashes, and underscores.</mat-error>
+		</mat-form-field>
+
+		<mat-form-field [formGroup]="createDocumentForm" appearance="outline">
+			<mat-label>File type</mat-label>
+			<mat-select formControlName="documentType" required>
+				<mat-option value="java">Java</mat-option>
+				<mat-option value="ts">Typescript</mat-option>
+				<mat-option value="c">C</mat-option>
+				<mat-option value="cpp">C++</mat-option>
+				<mat-option value="py">Python</mat-option>
+				<mat-option value="html">HTML</mat-option>
+				<mat-option value="css">CSS</mat-option>
+				<mat-option value="js">Javascript</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field [formGroup]="createDocumentForm" appearance="outline">
+			<mat-label>Password</mat-label>
+			<input matInput placeholder="Ex: password123" formControlName="documentPassword" required>
+			<mat-error *ngIf="this.createDocumentForm.valid">Enter a password.</mat-error>
+		</mat-form-field>
+		
+		<div class="submit-button">
+			<button type="submit" [disabled]="!createDocumentForm.valid || awaitingCreateResponse">Create Document</button>
 		</div>
 	</form>
 </div>

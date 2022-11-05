@@ -24,6 +24,8 @@ export class EditorComponent implements OnInit {
     editor: any;
     @Input() documentId: number = 0;
     @Input() documentPassword: string = '';
+    @Input() filename: string = '';
+    @Input() filetype: string = '';
 
     // This subscription manages changes found on the local editor
     localEditorChangeSubscription: any;
@@ -140,6 +142,21 @@ export class EditorComponent implements OnInit {
             }
             }
         }); 
+    }
+
+    download(): void {
+        let filename: string = this.filename + '.' + this.filetype;
+        let text: string = this.editor.getModel().getValue();
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
     }
 
 }

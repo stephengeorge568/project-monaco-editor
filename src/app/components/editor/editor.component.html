@@ -1,3 +1,12 @@
-<div class="container">
-    <ngx-monaco-editor class="editor" [options]="editorOptions" [model]="model" (onInit)="onInit($event)"></ngx-monaco-editor>
+
+<div>
+    <div class="button-bar">
+        <button ><mat-icon>cloud_upload</mat-icon> <p>Save to Cloud</p></button>
+        <button (click)="download()"><mat-icon>save_alt</mat-icon> <p>Download File</p></button>
+        <h1>{{filename}}.{{filetype}}</h1>
+    </div>
+    
+    <div class="container">
+        <ngx-monaco-editor class="editor" [options]="editorOptions" [model]="model" (onInit)="onInit($event)"></ngx-monaco-editor>
+    </div>
 </div>

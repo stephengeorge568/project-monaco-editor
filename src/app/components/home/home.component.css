@@ -5,10 +5,6 @@ form {
 	width: 200px;
 }
 
-.test {
-	background-color: var(--baby-blue);
-}
-
 .container {
 	display: flex;
   	align-items: center;

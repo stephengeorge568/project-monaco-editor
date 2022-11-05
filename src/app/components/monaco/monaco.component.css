@@ -27,3 +27,7 @@ form {
   	align-items: center;
   	justify-content: center;
 }
+
+.button-container {
+	padding-right: 15px;
+}

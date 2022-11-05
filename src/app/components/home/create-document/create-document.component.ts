@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DocumentInfoComponent } from '../../document-info/document-info.component';
@@ -20,7 +20,7 @@ export class CreateDocumentComponent implements OnInit {
   lastCreatedPassword?: string;
 
   createDocumentForm = new FormGroup({
-    documentName: new FormControl(''),
+    documentName: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9_-]*$')]),
     documentType: new FormControl(''),
     documentPassword: new FormControl(''),
   });

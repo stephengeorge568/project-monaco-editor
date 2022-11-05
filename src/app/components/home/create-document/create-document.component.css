@@ -1,15 +1,10 @@
 form {
 	display: flex;
 	flex-direction: column;
-
-	width: 200px;
-}
-
-.test {
-	background-color: var(--baby-blue);
 }
 
 .container {
+	flex-direction: column;
 	display: flex;
   	align-items: center;
   	justify-content: center;
@@ -17,12 +12,6 @@ form {
 	color: white;
 }
 
-.button-container button {
-	margin-top: 5px;
-	width: 50%;
-}
-
-.button-container {
-	display: flex;
-  	justify-content: center;
+.submit-button {
+	padding-right: 20px;
 }

@@ -1,17 +1,24 @@
 <div class="background">
 	<!-- Document metadata header -->
-	<div class="file-metadata" *ngIf="this.documentMetadata != undefined && isDocumentFound">
+	<!-- <div class="file-metadata" *ngIf="this.documentMetadata != undefined && isDocumentFound">
 		<p>{{this.documentMetadata.filename}}.{{this.documentMetadata.filetype}}</p>
 		<p>{{this.documentMetadata.id}}</p>
-	</div>
+	</div> -->
 
 	<!--  Document authentication form -->
 	<div class="container" *ngIf="!isDocumentAuthenticated">
 		<form [formGroup]="documentForm" (ngSubmit)="authenticate()" >
-			<label for="id">Document Id: </label>
-			<input id="id" type="text" [defaultValue]="this.documentId" readonly>
-			<label for="password">Document Password: </label>
-			<input id="password" type="text" formControlName="documentPassword">
+			<mat-form-field [formGroup]="documentForm" appearance="outline">
+				<mat-label>Document ID</mat-label>
+				<input matInput id="id" type="text" [defaultValue]="this.documentId" readonly>
+			</mat-form-field>
+
+			<mat-form-field [formGroup]="documentForm" appearance="outline">
+				<mat-label>Document Password</mat-label>
+				<input matInput formControlName="documentPassword" required>
+				<mat-error *ngIf="this.documentForm.valid">Please enter a positive integer ID.</mat-error>
+			</mat-form-field>
+
 			<div class="button-container">
 				<button type="submit" [disabled]="!documentForm.valid">Submit</button>
 			</div>
@@ -19,8 +26,8 @@
 	</div>
 
 	<!--  Document editor -->
-	<div class="editor-wrapper" *ngIf="isDocumentAuthenticated">
-		<app-editor [documentId]="documentId" [documentPassword]="documentPassword"></app-editor>
+	<div class="editor-wrapper" *ngIf="isDocumentAuthenticated && this.documentMetadata != undefined">
+		<app-editor [filetype]="this.documentMetadata.filetype" [filename]="this.documentMetadata.filename" [documentId]="documentId" [documentPassword]="documentPassword"></app-editor>
 	</div>
 </div>
 
