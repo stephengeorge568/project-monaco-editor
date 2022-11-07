@@ -12,6 +12,8 @@ import { DocumentService } from '../document-service/document.service';
   styleUrls: ['./create-document.component.css']
 })
 export class CreateDocumentComponent implements OnInit {
+  
+  errorResponse: boolean = false;
 
   awaitingCreateResponse: boolean = false;
 
@@ -31,6 +33,7 @@ export class CreateDocumentComponent implements OnInit {
   }
 
   onCreateSubmit() {
+    this.errorResponse = false;
     this.awaitingCreateResponse = true;
     this.documentService.createDocument(this.createDocumentForm.value.documentPassword, 
                                         this.createDocumentForm.value.documentName, 
@@ -49,6 +52,7 @@ export class CreateDocumentComponent implements OnInit {
       }, 
       (err: HttpErrorResponse) => {
         this.awaitingCreateResponse = false;
+        this.errorResponse = true;
       }
     );
 }

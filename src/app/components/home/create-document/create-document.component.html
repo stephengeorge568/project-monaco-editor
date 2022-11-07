@@ -1,5 +1,6 @@
 <div class="container">
 	<!-- <h2>Create Document</h2> -->
+	<p *ngIf="this.errorResponse">There was an error submitting request. Please try again later.</p>
 	<form [formGroup]="createDocumentForm" (ngSubmit)="onCreateSubmit()" >
 		<mat-form-field [formGroup]="createDocumentForm" appearance="outline">
 			<mat-label>Filename</mat-label>

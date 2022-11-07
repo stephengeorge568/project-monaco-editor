@@ -15,18 +15,22 @@ export class OpenDocumentComponent implements OnInit {
     documentId: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
   });
 
+  errorResponse: boolean = false;
+
   constructor(private documentService: DocumentService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
+    this.errorResponse = false;
     this.documentService.getDocumentMetaData(this.documentForm.value.documentId).subscribe(
       response => {
         this.router.navigate(['/document/' + this.documentForm.value.documentId]);
       }, 
       (err: HttpErrorResponse) => {
-      
+        console.log(err);
+        this.errorResponse = true;
       }
     );
 }

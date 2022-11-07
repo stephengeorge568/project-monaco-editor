@@ -5,6 +5,11 @@
 	padding-top: 100px;
 	color: white;
 	// background-color: var(--baby-blue);
+	flex-direction: column;
+}
+
+p {
+	color: red;
 }
 
 .button-container button {

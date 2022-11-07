@@ -1,5 +1,6 @@
 <div class="container">
 	<!-- <h2>Open Document</h2> -->
+	<p *ngIf="this.errorResponse">Incorrect ID and/or password.</p>
 	<form [formGroup]="documentForm" (ngSubmit)="onSubmit()" >
 		<mat-form-field [formGroup]="documentForm" appearance="outline">
 			<mat-label>Document ID</mat-label>

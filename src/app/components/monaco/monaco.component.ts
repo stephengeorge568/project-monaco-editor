@@ -22,7 +22,11 @@ export class MonacoComponent implements OnInit {
   documentPassword: string = '';
   documentMetadata?: GetDocumentMetaResponse;
 
-  isDocumentFound: boolean = false;
+  isPasswordWrong: boolean = false;
+
+  isDocumentFound: boolean = true;
+
+  isOtherError: boolean = false;
 
   constructor(private documentService: DocumentService,
               private route: ActivatedRoute,
@@ -55,19 +59,22 @@ export class MonacoComponent implements OnInit {
   }
 
   authenticate(): void {
-        this.documentPassword = this.documentForm.value.documentPassword;
-        this.documentService.openDocument(this.documentId, this.documentForm.value.documentPassword).subscribe(
-          response => {
-              this.isDocumentAuthenticated = true;
-          },
-          (err: HttpErrorResponse) => {
-            if (err.status == 401) {
-              // Password wrong
-            } else if (err.status == 404) {
-              // Document not in DB or filesystem
-            }
-          }
-      );
+    this.isPasswordWrong = false;
+    this.isOtherError = false;
+    this.documentPassword = this.documentForm.value.documentPassword;
+    this.documentService.openDocument(this.documentId, this.documentForm.value.documentPassword).subscribe(
+      response => {
+          this.isDocumentAuthenticated = true;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.status == 401) {
+          // Password wrong
+          this.isPasswordWrong = true;
+        } else if (err.status == 404) {
+          this.isOtherError = true;
+        }
+      }
+    );
   }
 
 }
