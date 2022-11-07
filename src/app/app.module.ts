@@ -24,6 +24,7 @@ import { CreateDocumentComponent } from './components/home/create-document/creat
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { FooterComponent } from './components/footer/footer.component';
+import { WelcomeComponent } from './components/home/welcome/welcome.component';
 
 
 const monacoConfig: NgxMonacoEditorConfig = {
@@ -43,6 +44,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     OpenDocumentComponent,
     CreateDocumentComponent,
     FooterComponent,
+    WelcomeComponent,
   ],
   imports: [
     MatDialogModule,

@@ -1,4 +1,5 @@
 .container {
-	height: 80px;
+	min-height: 10%;
 	background-color: var(--dark);
+	color: var(--text-white);
 }

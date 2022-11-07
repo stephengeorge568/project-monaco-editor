@@ -1,0 +1,44 @@
+.container {
+	display: flex;
+	align-items: center;
+  	justify-content: center;
+	flex-direction: column;
+	color: var(--text-white);
+	padding-top: 50px;
+}
+
+.typer {
+	padding-bottom: 8px;
+}
+
+.typer h1 {	
+	color: white;
+	font-size: 28px;
+	overflow: hidden;
+	border-right: .15em solid white; 
+	white-space: nowrap;
+	margin: 0 auto;
+	letter-spacing: 0.05em;
+	// height: 35px;
+	animation: 
+	  typing 6s steps(18, end) infinite,
+	  blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+	0% { width: 0 }
+	50% { width: 100% }
+}
+
+@keyframes blink-caret {
+	from, to { border-color: transparent }
+	50% { border-color: white; }
+}
+
+p {
+	font-size: 18px;
+}
+
+.spacer {
+	padding-top: 10px;
+}
