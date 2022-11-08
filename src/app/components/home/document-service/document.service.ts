@@ -42,5 +42,9 @@ export class DocumentService {
     let request: CreateDocumentRequest = new CreateDocumentRequest(password, name, type);
     return this.http.post<number>(this.serverIP + "/api/document", request);
   }
+
+  public saveDocumentToCloud(password: string, id: number): Observable<string> {
+    return this.http.put<any>(this.serverIP + "/api/document/" + id, password);
+  }
   
 }

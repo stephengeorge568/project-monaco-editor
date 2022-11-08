@@ -33,6 +33,8 @@ export class EditorComponent implements OnInit {
     // Flag to detect what changes are programmatic and which are manual and local 
     isProgrammaticChange: boolean;
 
+    isSaveError: boolean = false;
+
     constructor(private editorService: EditorService, 
                 private otService: OperationalTransformationService, 
                 private websocketService: WebsocketService,
@@ -157,6 +159,16 @@ export class EditorComponent implements OnInit {
         element.click();
       
         document.body.removeChild(element);
+    }
+
+    save(): void {
+        this.isSaveError = false;
+        this.documentService.saveDocumentToCloud(this.documentPassword, this.documentId).subscribe(
+            (response) => {
+
+            }, (err) => {
+                this.isSaveError = true;
+            });
     }
 
 }

@@ -13,7 +13,7 @@ const routes: Routes = [
   // { path: '**', redirectTo: 'home' },
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'document/:id', component: MonacoComponent },
-  { path: '', redirectTo: 'home' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },
 ];
 

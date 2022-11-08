@@ -1,5 +1,5 @@
 .editor {
-     min-width: 100%;
+    min-width: 100%;
     width: 100%;
 	min-height: 80vh; 
 }
@@ -7,6 +7,7 @@
 button {
     width: 170px;
     float: left;
+    margin-right: 10px;
 }
 .button-bar {
     width: 100%;
@@ -17,16 +18,30 @@ button {
 }
 
 .container {
-	/* margin-top: 10%; */
-	/* padding: 5%; */
-    /* width: 50vw; 
-    height: 80vh;  */
     background-color: #0D0D0D;
     padding: 20px;
-	/* height: 100%; */
 }
 
 h1 {
     padding-top: 15px;
     float: right;
+}
+
+@media (max-width: 550px) {
+    button {
+        width: 100px;
+        height: 40px;
+    }
+
+    mat-icon {
+        display: none;
+    }
+}
+
+button p {
+    color: var(--text-white);
+}
+
+p {
+    color: red;
 }
