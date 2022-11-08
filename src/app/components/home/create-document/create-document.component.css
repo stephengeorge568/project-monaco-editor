@@ -12,9 +12,23 @@ form {
 }
 
 .submit-button {
-	padding-right: 20px;
+	padding-right: 0px;
 }
 
 p {
 	color: red;
+}
+
+button p {
+	color: var(--text-white);
+	padding-top: 10px;
+}
+
+button {
+	margin-top: 3px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+  	justify-content: center;
+	width: 100%;
 }

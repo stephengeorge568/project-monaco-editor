@@ -1,5 +1,6 @@
 <div class="container">
 	<!-- <h2>Create Document</h2> -->
+	<h2>Create Document</h2>
 	<p *ngIf="this.errorResponse">There was an error submitting request. Please try again later.</p>
 	<form [formGroup]="createDocumentForm" (ngSubmit)="onCreateSubmit()" >
 		<mat-form-field [formGroup]="createDocumentForm" appearance="outline">
@@ -29,7 +30,9 @@
 		</mat-form-field>
 		
 		<div class="submit-button">
-			<button type="submit" [disabled]="!createDocumentForm.valid || awaitingCreateResponse">Create Document</button>
+			<button type="submit" [disabled]="!createDocumentForm.valid || awaitingCreateResponse">
+				<mat-icon>add</mat-icon><p>Submit</p>
+			</button>
 		</div>
 	</form>
 </div>
