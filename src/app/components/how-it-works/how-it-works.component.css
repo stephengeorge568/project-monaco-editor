@@ -1,0 +1,30 @@
+.container {
+	min-height: 83%;
+	background-color: var(--less-dark);
+	display: flex;
+	/* align-items: center;
+	justify-content: center; */
+	padding: 30px;
+	color: var(--text-white);
+}
+
+.columns {
+	display: flex;
+	flex-direction: column;
+}
+
+h1 {
+	align-self: center;
+}
+
+img {
+	height: 421px;
+	width: 551px;
+}
+
+@media (max-width: 620px) {
+	img {
+		height: 253px;
+		width: 331px;
+	}
+}
