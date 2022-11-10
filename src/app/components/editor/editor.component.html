@@ -2,8 +2,8 @@
 <div>
     <div class="button-bar">
         <p *ngIf="isSaveError">There was an issue saving document model to cloud. Please try again later.</p>
-        <button (click)="save()"><mat-icon>cloud_upload</mat-icon> <p>Save to Cloud</p></button>
-        <button (click)="download()"><mat-icon>save_alt</mat-icon> <p>Download File</p></button>
+        <button (click)="save()" id="save"><mat-icon>cloud_upload</mat-icon> <p>Save to Cloud</p></button>
+        <button (click)="download()" id="download"><mat-icon>save_alt</mat-icon> <p>Download File</p></button>
         <h1>{{filename}}.{{filetype}}</h1>
     </div>
     
