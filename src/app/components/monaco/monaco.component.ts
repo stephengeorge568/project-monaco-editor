@@ -37,6 +37,10 @@ export class MonacoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    console.log("DESTROY");
+  }
+
   getMetadata(): void {
     let idParam = this.route.snapshot.paramMap.get('id');
     if (idParam !== null) {

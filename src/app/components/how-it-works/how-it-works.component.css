@@ -1,9 +1,9 @@
 .container {
 	min-height: 83%;
 	background-color: var(--less-dark);
-	display: flex;
-	/* align-items: center;
-	justify-content: center; */
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	padding: 30px;
 	color: var(--text-white);
 }
@@ -20,6 +20,9 @@ h1 {
 img {
 	height: 421px;
 	width: 551px;
+	align-self: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 @media (max-width: 620px) {
@@ -27,4 +30,10 @@ img {
 		height: 253px;
 		width: 331px;
 	}
+}
+
+p {
+	max-width: 900px;
+	align-self: center;
+	font-size: 18px;
 }

@@ -1,7 +1,24 @@
 <div class="container">
 	<div class="columns">
 	<h1>How It Works</h1>
-	<p>The difficulty in creating a collaborative text editting software system is caused by the latency between clients. Because of the time it takes for a user's change to the document model to propogate to other clients, conflicts can arise and the clients will fall out of sync. This issue is best illustrated with a simple example:</p>
+	<p>The difficulty in creating a collaborative text editting software system is caused by the latency between clients. 
+		Because of the time it takes for a user's change to the document model to propogate to other clients, conflicts 
+		can arise and the clients will fall out of sync. This issue is best illustrated with a simple example:</p>
 	<img src="/assets/OT-latency-explained.png" alt="OT latency issue explained image could not be shown at this time.">
+	<p>
+		In this example we have two clients: Amy and Bob. They are editting a document that currently as "abc" as the 
+		document model. Amy enters the character '@' at the beginning of the document. On her screen, she will see 
+		the document model update to "@abc". Her change to the document will then be sent to Bob's client, however it will take awhile for the message to travel to him.
+		At near the same time, Bob inserts character '%' at the beginning of the 
+		document. Bob's document model will now read as "%abc". Bob's change will then be sent to Amy's document.
+	</p>
+	<p>
+		When Amy's change finally arrives to Bob, it sees that Bob's document model is "%abc". Remember that Amy's change 
+		was insert '@' at the beginning of the document, or index 0. When Amy's change is applied to Bob's document, Bob's final document model is "<u>@%abc</u>".
+		However, when Bob's initial change of insert '%' to the beginning of the document arrives and is applied to Amy's document, Amy ends up with a document state of "<u>%@abc</u>".
+	</p>
+	<p>
+		Amy and Bob's documents are now different. This is considered a confliction in the document state and is why managing real-time document editting systems is difficult.
+	</p>
 	</div>
 </div>
