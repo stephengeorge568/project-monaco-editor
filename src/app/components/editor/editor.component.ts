@@ -45,18 +45,12 @@ export class EditorComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.editorService.getDocument(this.documentId, this.documentPassword).subscribe(response => {
-            console.log(response);
-            this.editor.getModel().setValue(response.model);
-        },
-        err => {
-            console.log("Get document has failed: " + err);
-        });
         this.editorService.cacheRevId(this.documentId);
         this.connectWebsocket();
     }
 
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
+        console.log("OIN INIIT");
         this.editor = editorInit;
         this.editor.getModel()?.updateOptions({insertSpaces: false});
         this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
@@ -120,7 +114,6 @@ export class EditorComponent implements OnInit {
 
         // This subscription manages changes found on the local editor
         this.localEditorChangeSubscription = this.editor.getModel().onDidChangeContent((event: monaco.editor.IModelContentChangedEvent) => { 
-            console.log(this.editor.getValue());
             let opRange: monaco.IRange = event.changes[0].range;
             let request: StringChangeRequest = new StringChangeRequest(
                 new Date().toISOString(), 
