@@ -19,8 +19,8 @@ import { Input } from '@angular/core';
 export class EditorComponent implements OnInit {
 
     // configurations for monaco editor
-    editorOptions = {quickSuggestions: false,theme: 'vs-dark', language: 'java'};
-    model: NgxEditorModel = {value : ''};
+    editorOptions = {quickSuggestions: false, theme: 'vs-dark'};
+    model: NgxEditorModel = {value : '', language: 'java'};
     editor: any;
     @Input() documentId: number = 0;
     @Input() documentPassword: string = '';
@@ -52,6 +52,9 @@ export class EditorComponent implements OnInit {
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
         console.log("OIN INIIT");
         this.editor = editorInit;
+        const code: HTMLElement = document.getElementById('editor') as HTMLElement;
+        monaco.editor.colorizeElement(code, {tabSize: 4});
+        monaco.editor.setTheme('vs-dark');
         this.editor.getModel()?.updateOptions({insertSpaces: false});
         this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
             this.isProgrammaticChange = true;
