@@ -19,16 +19,25 @@ import { Input } from '@angular/core';
 export class EditorComponent implements OnInit {
 
     // configurations for monaco editor
-    editorOptions = {quickSuggestions: false, theme: 'vs-dark'};
-    model: NgxEditorModel = {value : '', language: 'java'};
+//     editorOptions = {quickSuggestions: {
+//         "other": false,
+//        "comments": false,
+//        "strings": false
+//    }, theme: 'vs-dark'};
+    editorOptions = {inlineSuggest: false, theme: 'vs-dark'};
+   
     editor: any;
     @Input() documentId: number = 0;
     @Input() documentPassword: string = '';
     @Input() filename: string = '';
     @Input() filetype: string = '';
 
+    model: NgxEditorModel = {value: ''};
+
     // This subscription manages changes found on the local editor
     localEditorChangeSubscription: any;
+
+    isFiletypeLoaded: boolean = false;
 
     // Flag to detect what changes are programmatic and which are manual and local 
     isProgrammaticChange: boolean;
@@ -45,17 +54,33 @@ export class EditorComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.filetype == 'ts') {
+            this.model = {value : '', language: 'typescript'}
+        } else if (this.filetype == 'js') {
+            this.model = {value : '', language: 'javascript'}
+        } else if (this.filetype == 'py') {
+            this.model = {value : '', language: 'python'}
+        } else {
+            this.model = {value : '', language: this.filetype}
+        }
+        this.isFiletypeLoaded = true;
         this.editorService.cacheRevId(this.documentId);
         this.connectWebsocket();
     }
 
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
-        console.log("OIN INIIT");
         this.editor = editorInit;
-        const code: HTMLElement = document.getElementById('editor') as HTMLElement;
-        monaco.editor.colorizeElement(code, {tabSize: 4});
-        monaco.editor.setTheme('vs-dark');
+        console.log(monaco.editor.EditorOptions.quickSuggestions);
+
+        monaco.editor.EditorOptions.quickSuggestions.applyUpdate({other: false, comments: false, strings: false}, true);
+        monaco.editor.EditorOptions.quickSuggestions.defaultValue = {other: false, comments: false, strings: false};
+        console.log(monaco.editor.EditorOptions.quickSuggestions);
+        // const code: HTMLElement = document.getElementById('editor') as HTMLElement;
+        // monaco.editor.colorizeElement(code, {tabSize: 4});
+        // monaco.editor.setTheme('vs-dark');
         this.editor.getModel()?.updateOptions({insertSpaces: false});
+
+        // monaco.editor.EditorOptions.quickSuggestions.applyUpdate(false, false);
         this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
             this.isProgrammaticChange = true;
             
