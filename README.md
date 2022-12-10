@@ -1,8 +1,16 @@
 # OT-Editor
+This is the backend API and server for a web based collaborative code editor. Users can create documents and edit those documents with anyone that can access a browser. The editor supports features like cloud save, downloading the file, syntax highlighting, some simple intellisense, and more! 
+## How to use
 
-This will be unorganized for the time being...
-This is the text editor web front end for my operational transformation project. Operational transformation is a method for maintaining consistency and concurrency in collaborative editing of documents. The [wikipedia page for operational transformation](https://en.wikipedia.org/wiki/Operational_transformation) may be of assistance in understanding the concept.
+1. Download code. 
+2. Download Docker. 
+3. In dockerfile, change value of --spring.profiles.active to dev 
+4. Perform command ‘docker build –t ot-server .’ on root folder 
+5. Perform command ‘docker run -p 8080:8080 ot-server' 
 
-This project will initially just be the front end for the editting of a single document that other clients can connect to and collaboratively edit in real time. Once this is completed and the OT process is fine-tuned, I will surround this project with a login/session management. Users will be able to create new documents and invite other users to be able to view and edit the file. This project will be a work in progress for awhile. This readme will also be updated frequently to reflect new plans. Furthermore, users will be able to download the file.
+## Release Notes
+September 2022: Only one document at a time can be supported. Some minor bugs with operational transformation process. No way to save document model to filesystem or database.
 
-The Github page for the server application can be found [here](https://github.com/stephengeorge568/OT-server)
+October 2022: Generalization nearly complete. Multiple documents can be created, and mulitiple documents can be editted at once. Documents can be opened and editted. Database access is implemented. No way to save model to filesystem.
+
+November 2022: Generalization complete. Filesystem cloud saves enabled. Minor bug fixes.
