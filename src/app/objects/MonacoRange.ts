@@ -1,3 +1,6 @@
+/**
+ * Object defining range on the editor.
+ */
 export class MonacoRange {
     public endColumn: number;
     public startColumn: number;

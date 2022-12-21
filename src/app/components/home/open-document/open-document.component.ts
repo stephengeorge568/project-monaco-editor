@@ -4,6 +4,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DocumentService } from '../document-service/document.service';
 
+/**
+ * Component that provides capability to open a new document and authenticate.
+ */
 @Component({
   selector: 'app-open-document',
   templateUrl: './open-document.component.html',

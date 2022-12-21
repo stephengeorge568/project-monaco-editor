@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GetDocumentMetaResponse } from 'src/app/objects/GetDocumentMetaResponse';
 import { DocumentService } from '../home/document-service/document.service';
 
+/**
+ * Wrapper component for the editor. This handles some of the authentication.
+ */
 @Component({
   selector: 'app-monaco',
   templateUrl: './monaco.component.html',

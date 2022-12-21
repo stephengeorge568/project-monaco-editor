@@ -1,3 +1,6 @@
+/**
+ * Object containing static global values.
+ */
 export class GlobalConstants {
     // My workstation's local ip
     public static devServerAddress: string = "http://localhost:8080";

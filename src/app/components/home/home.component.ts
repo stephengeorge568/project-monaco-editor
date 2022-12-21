@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { DocumentInfoComponent } from '../document-info/document-info.component';
 import { DocumentService } from './document-service/document.service';
 
+/**
+ * Home component. Landing page.
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

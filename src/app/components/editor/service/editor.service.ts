@@ -60,6 +60,9 @@ export class EditorService {
         // this.cacheRevId();
     }
 
+    /**
+     * Gets identity value from server
+     */
     public cacheIdentity(): void {
         this.http.get<number>(this.serverIP + "/api/ot/identity").subscribe(response => {
             this.clientIdentity = response;

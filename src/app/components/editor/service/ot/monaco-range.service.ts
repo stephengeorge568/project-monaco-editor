@@ -9,6 +9,13 @@ export class MonacoRangeService {
 
     constructor() { }
 
+    /**
+     * Determines whether or not a historical request affects the current request.
+     * @param prev previous, historical request
+     * @param next current request
+     * @return true when prev range is at same spot or before next range
+     * - i.e prev will affect next's range when transformed, false otherwise
+     */
     public isPreviousRequestRelevant(prev: MonacoRange, next: MonacoRange): boolean {
         let isNextSimpleInsert: boolean = next.startLineNumber - next.endLineNumber == 0 && 
                                             next.startColumn - next.endColumn == 0;
@@ -35,6 +42,12 @@ export class MonacoRangeService {
                     || this.isECWithinRange(next, prev) || this.isECWithinRange(prev, next);
     }
 
+    /**
+     * Determines whether or not p's start column is within n's range
+     * @param n request n
+     * @param p request p
+     * @return true when p's start column is within n's range. false otherwise
+     */
     public isSCWithinRange(prev: MonacoRange, next: MonacoRange): boolean {
         if (next.startLineNumber > prev.startLineNumber
                     && next.startLineNumber < prev.endLineNumber) return true;
@@ -52,6 +65,12 @@ export class MonacoRangeService {
         return false;
     }
 
+    /**
+     * Determines whether or not n's end column is within p's range   -note comment changed here. used to be other way around
+     * @param n request n
+     * @param p request p
+     * @return true when n's end column is within p's range. false otherwise
+     */
     public isECWithinRange(prev: MonacoRange, next: MonacoRange): boolean {
         if (next.endLineNumber < prev.endLineNumber
                     && next.endLineNumber > prev.startLineNumber) return true;
@@ -69,6 +88,13 @@ export class MonacoRangeService {
         return false;
     }
 
+    /**
+     * Shifts the range of next to remove selection that both prev and next delete/replace
+     * @param prev previous, historical request
+     * @param next current request that can be altered
+     * @return List of at most 2 requests. The first element is the original request that may have be altered.
+     * the second element is either null or a second request generated from splitting two ranges
+     */
     public resolveConflictingRanges(prev: StringChangeRequest, next: StringChangeRequest): StringChangeRequest[] {
 
         if (this.isRangeSimpleInsert(prev.range)  || this.isRangeSimpleInsert(next.range)) {

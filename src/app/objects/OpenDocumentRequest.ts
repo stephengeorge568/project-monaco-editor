@@ -1,5 +1,7 @@
 
-
+/**
+ * Open document request.
+ */
 export class OpenDocumentRequest {
     
     public id: number;

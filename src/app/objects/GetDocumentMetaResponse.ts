@@ -1,5 +1,7 @@
 
-
+/**
+ * Response object for get meta data.
+ */
 export class GetDocumentMetaResponse {
     
     public id: number;

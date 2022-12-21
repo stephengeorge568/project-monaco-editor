@@ -1,3 +1,6 @@
+/**
+ * Document Object.
+ */
 export class Document {
     public id: number;
 	public model: string;

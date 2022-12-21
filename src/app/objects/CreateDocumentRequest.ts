@@ -1,5 +1,6 @@
-
-
+/**
+ * Request object for create document.
+ */
 export class CreateDocumentRequest {
     
     public password_hash: string;

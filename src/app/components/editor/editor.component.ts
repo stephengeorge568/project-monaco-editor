@@ -11,6 +11,9 @@ import { DocumentService } from '../home/document-service/document.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Input } from '@angular/core';
 
+/**
+ * Component for the editor and its logic.
+ */
 @Component({
     selector: 'app-editor',
     templateUrl: './editor.component.html',
@@ -18,12 +21,6 @@ import { Input } from '@angular/core';
 })
 export class EditorComponent implements OnInit {
 
-    // configurations for monaco editor
-//     editorOptions = {quickSuggestions: {
-//         "other": false,
-//        "comments": false,
-//        "strings": false
-//    }, theme: 'vs-dark'};
     editorOptions = {inlineSuggest: false, theme: 'vs-dark'};
    
     editor: any;
@@ -113,6 +110,9 @@ export class EditorComponent implements OnInit {
         this.websocketService.disconnectWebSocket();
     }
 
+    /**
+     * Starts up listeners for changes on model as well as incoming changes.
+     */
     subscriptions(): void {
         // This subscription manages incoming changes from other clients
         this.editorService.stringChangeRequestSubject.subscribe((operation: StringChangeRequest) => {
@@ -167,6 +167,9 @@ export class EditorComponent implements OnInit {
         }); 
     }
 
+    /**
+     * Download logic for file.
+     */
     download(): void {
         let filename: string = this.filename + '.' + this.filetype;
         let text: string = this.editor.getModel().getValue();
@@ -182,6 +185,9 @@ export class EditorComponent implements OnInit {
         document.body.removeChild(element);
     }
 
+    /**
+     * Calls server to save to its filesystem.
+     */
     save(): void {
         this.isSaveError = false;
         this.documentService.saveDocumentToCloud(this.documentPassword, this.documentId).subscribe(

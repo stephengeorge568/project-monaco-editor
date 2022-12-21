@@ -1,5 +1,7 @@
 import { MonacoRange } from "./MonacoRange";
-
+/**
+ * String change request object.
+ */
 export class StringChangeRequest {
     
     public documentId: number;

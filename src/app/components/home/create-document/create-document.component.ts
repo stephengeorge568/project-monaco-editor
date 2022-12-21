@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { DocumentInfoComponent } from '../../document-info/document-info.component';
 import { DocumentService } from '../document-service/document.service';
 
+/**
+ * Component that provides functionality to create document and its logic.
+ */
 @Component({
   selector: 'app-create-document',
   templateUrl: './create-document.component.html',

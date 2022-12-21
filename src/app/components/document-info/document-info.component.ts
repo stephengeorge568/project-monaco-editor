@@ -1,6 +1,9 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
+/**
+ * Component for displaying newly created document authentication information.
+ */
 @Component({
   selector: 'app-document-info',
   templateUrl: './document-info.component.html',

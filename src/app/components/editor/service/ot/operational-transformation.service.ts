@@ -26,6 +26,13 @@ export class OperationalTransformationService {
         } else this.history.get(req.revID)?.push(req);
     }
 
+    /**
+     * Get the historical requests that affect the current request based on its revID
+     * oldest changes at head of list, ascending order
+     * @param revID the revID of the current request
+     * @param history the history map
+     * @return list of requests that affect the current request
+     */
     private getRelevantHistory(revID: number, history: Map<number, StringChangeRequest[]>): StringChangeRequest[] {
         let relevantRequests: StringChangeRequest[] = [];
         history.forEach((list, id) => {
@@ -36,6 +43,12 @@ export class OperationalTransformationService {
         return relevantRequests;
     }
 
+    /**
+     * Transforms the given request based on the history of committed requests
+     * @param request the request to transform
+     * @param history the history of committed requests
+     * @return
+     */
     public transform(request: StringChangeRequest): StringChangeRequest[] {
         let transformedRequests: StringChangeRequest[] = [];
 
@@ -74,7 +87,12 @@ export class OperationalTransformationService {
 
         return transformedRequests;
     }
-
+    /**
+     * Returns the transformed version of next based on the prev historical request.
+     * @param prev the previous request, which serves as the basis on which to transform next
+     * @param next the current request to transform
+     * @return the transformed version of next that was altered based on prev's range and text
+     */
     private transformOperation(prev: StringChangeRequest, next: StringChangeRequest): StringChangeRequest {
         let newSC: number = next.range.startColumn;
         let newEC: number = next.range.endColumn;
