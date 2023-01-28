@@ -59,7 +59,7 @@ export class OperationalTransformationService {
         while((currentRequest = toTransformQueue.dequeue()) != undefined) {
             let relevantHistory: StringChangeRequest[] = this.getRelevantHistory(request.revID, this.history);
             
-            for (let i = 0; i < relevantHistory.length; i++) {              
+            for (let i = 0; i < relevantHistory.length; i++) {
                 let historicalRequest: StringChangeRequest = relevantHistory[i];
 
                 if (request.identity !== historicalRequest.identity) {

@@ -67,12 +67,14 @@ export class EditorComponent implements OnInit {
 
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
         this.editor = editorInit;
+        
         monaco.editor.EditorOptions.quickSuggestions.applyUpdate({other: false, comments: false, strings: false}, true);
         monaco.editor.EditorOptions.quickSuggestions.defaultValue = {other: false, comments: false, strings: false};
         this.editor.getModel()?.updateOptions({insertSpaces: false});
+        this.editor.getModel()?.setEOL(monaco.editor.EndOfLineSequence.LF)
 
         this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
-            this.isProgrammaticChange = true;
+            this.isProgrammaticChange = true; 
             this.editor.getModel()?.applyEdits([{
                 forceMoveMarkers: false,
                 range: {
@@ -107,11 +109,16 @@ export class EditorComponent implements OnInit {
      */
     subscriptions(): void {
         // This subscription manages incoming changes from other clients
+        
         this.editorService.stringChangeRequestSubject.subscribe((operation: StringChangeRequest) => {
+            console.log(operation);
             if (operation.documentId !== -1) {
                 let transformed: StringChangeRequest[] = this.otService.transform(operation);
                 
                 for (var request of transformed) {
+                    console.log(request);
+                    console.log(this.otService.history);
+                    console.log('---------------------------------------------------------');
                     this.otService.insertRequestIntoHistory(request);
                     this.isProgrammaticChange = true;
                     this.editor.getModel()?.applyEdits([{
