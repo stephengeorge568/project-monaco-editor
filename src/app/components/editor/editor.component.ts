@@ -67,20 +67,12 @@ export class EditorComponent implements OnInit {
 
     onInit(editorInit: monaco.editor.IStandaloneCodeEditor) {
         this.editor = editorInit;
-        console.log(monaco.editor.EditorOptions.quickSuggestions);
-
         monaco.editor.EditorOptions.quickSuggestions.applyUpdate({other: false, comments: false, strings: false}, true);
         monaco.editor.EditorOptions.quickSuggestions.defaultValue = {other: false, comments: false, strings: false};
-        console.log(monaco.editor.EditorOptions.quickSuggestions);
-        // const code: HTMLElement = document.getElementById('editor') as HTMLElement;
-        // monaco.editor.colorizeElement(code, {tabSize: 4});
-        // monaco.editor.setTheme('vs-dark');
         this.editor.getModel()?.updateOptions({insertSpaces: false});
 
-        // monaco.editor.EditorOptions.quickSuggestions.applyUpdate(false, false);
         this.editorService.cacheModel(this.documentId).subscribe((response: any) => {
             this.isProgrammaticChange = true;
-            
             this.editor.getModel()?.applyEdits([{
                 forceMoveMarkers: false,
                 range: {
@@ -116,9 +108,9 @@ export class EditorComponent implements OnInit {
     subscriptions(): void {
         // This subscription manages incoming changes from other clients
         this.editorService.stringChangeRequestSubject.subscribe((operation: StringChangeRequest) => {
-            // TODO change to other method
             if (operation.documentId !== -1) {
                 let transformed: StringChangeRequest[] = this.otService.transform(operation);
+                
                 for (var request of transformed) {
                     this.otService.insertRequestIntoHistory(request);
                     this.isProgrammaticChange = true;
@@ -133,7 +125,10 @@ export class EditorComponent implements OnInit {
                         text: request.text
                     }]);
                     this.isProgrammaticChange = false;
+                    
                 }
+                if (operation.setID != undefined && operation.setID > this.otService.revID)
+                    this.otService.revID = operation.setID;
             } 
             
         }, (err: any) => {
@@ -157,12 +152,13 @@ export class EditorComponent implements OnInit {
                 0,
                 this.documentPassword);
 
-            this.otService.insertRequestIntoHistory(request);
+            
             if (!this.isProgrammaticChange) {
+                this.otService.insertRequestIntoHistory(request);
                 this.editorService.insertChangeIntoQueue(request);
-            if (!this.editorService.isAwaitingChangeResponse) {
-                this.editorService.sendNextChangeRequest();
-            }
+                if (!this.editorService.isAwaitingChangeResponse) {
+                    this.editorService.sendNextChangeRequest();
+                }
             }
         }); 
     }

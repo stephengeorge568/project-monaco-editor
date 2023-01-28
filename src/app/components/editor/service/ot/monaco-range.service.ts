@@ -121,7 +121,6 @@ export class MonacoRangeService {
 
         else if (this.isECWithinRange(prev.range, next.range)
                 && this.isSCWithinRange(prev.range, next.range)) {
-            //create deep copy for otherNext
             let otherNext: StringChangeRequest = new StringChangeRequest(
                 next.timestamp,
                 next.text,
@@ -129,7 +128,8 @@ export class MonacoRangeService {
                 new MonacoRange(next.range.endColumn, next.range.startColumn, next.range.endLineNumber, next.range.startLineNumber),
                 next.revID,
                 next.documentId,
-                next.setID);
+                next.setID,
+                next.password);
                 
             otherNext.text = "";
 

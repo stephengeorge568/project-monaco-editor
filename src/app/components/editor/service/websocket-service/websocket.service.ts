@@ -32,10 +32,8 @@ export class WebsocketService {
 
     public recieveFromWebSocket(request: any) {      
         let obj = JSON.parse(request.body);
-
         if (obj.identity != this.editorService.clientIdentity) {
-            this.editorService.stringChangeRequestSubject.next(new StringChangeRequest(obj.timestamp, obj.text, this.editorService.clientIdentity, obj.range, obj.revID, obj.setID));
-            this.otService.revID = obj.setID;
+           this.editorService.stringChangeRequestSubject.next(new StringChangeRequest(obj.timestamp, obj.text, this.editorService.clientIdentity, obj.range, obj.revID, obj.revID, obj.setID, ""));
         }  
     }
 

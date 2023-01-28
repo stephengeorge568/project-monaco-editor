@@ -10,16 +10,17 @@ export class StringChangeRequest {
     public identity: number;
     public range: MonacoRange;
     public revID: number;
-    public setID?: number;
-    public password?: string;
+    public setID: number;
+    public password: string;
 
     constructor(timestamp: string, 
-                text: string, identity: number, 
+                text: string, 
+                identity: number, 
                 range: MonacoRange, 
                 revID: number, 
                 documentId: number, 
-                setID?: number,
-                password?: string) {
+                setID: number,
+                password: string) {
         this.timestamp = timestamp;
         this.text = text;
         this.identity = identity;

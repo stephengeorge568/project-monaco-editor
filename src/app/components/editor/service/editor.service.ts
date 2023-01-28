@@ -27,7 +27,7 @@ export class EditorService {
     pendingChangeQueue: Queue<StringChangeRequest>;
 
     // TODO gotta be better/more proper way to do this. this outputs event on init when i dont want it to.
-    stringChangeRequestSubject: BehaviorSubject<StringChangeRequest> = new BehaviorSubject(new StringChangeRequest("", "", -1, new MonacoRange(-1, -1, -1, -1), -1 ,1));
+    stringChangeRequestSubject: BehaviorSubject<StringChangeRequest> = new BehaviorSubject(new StringChangeRequest("", "", -1, new MonacoRange(-1, -1, -1, -1), -1, -1 , -1, ""));
 
     /* ----------------- FLAGS ----------------- */
     // flag to halt sending of change requests until response arrives from earlier response

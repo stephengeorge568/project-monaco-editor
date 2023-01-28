@@ -37,7 +37,7 @@ export class OperationalTransformationService {
         let relevantRequests: StringChangeRequest[] = [];
         history.forEach((list, id) => {
             if (id >= revID) {
-                relevantRequests.concat(list);
+                relevantRequests = [...relevantRequests, ...list];
             }
         });
         return relevantRequests;
@@ -56,18 +56,16 @@ export class OperationalTransformationService {
         toTransformQueue.enqueue([request, -1]);
 
         let currentRequest: [StringChangeRequest, number] | undefined;
-
         while((currentRequest = toTransformQueue.dequeue()) != undefined) {
             let relevantHistory: StringChangeRequest[] = this.getRelevantHistory(request.revID, this.history);
-
-            for (let i = 0; i < relevantHistory.length; i++) {
+            
+            for (let i = 0; i < relevantHistory.length; i++) {              
                 let historicalRequest: StringChangeRequest = relevantHistory[i];
 
-                if (!(request.identity == historicalRequest.identity)) {
+                if (request.identity !== historicalRequest.identity) {
                     let pair: StringChangeRequest[] = this.monacoService.resolveConflictingRanges(historicalRequest, currentRequest[0]);
-
                     if (currentRequest[1] < i) {
-                        this.transformOperation(historicalRequest, pair[0]);
+                        currentRequest[0] = this.transformOperation(historicalRequest, pair[0]);
                     }
 
                     if (pair[1] != null) {
@@ -78,13 +76,12 @@ export class OperationalTransformationService {
 
             for (var newHistoralRequest of transformedRequests) {
                 if (this.monacoService.isPreviousRequestRelevant(newHistoralRequest.range, currentRequest[0].range)) {
-                    this.transformOperation(newHistoralRequest, currentRequest[0]);
+                    currentRequest[0] = this.transformOperation(newHistoralRequest, currentRequest[0]);
                 }
             }
             
             transformedRequests.push(currentRequest[0]);
         }
-
         return transformedRequests;
     }
     /**
@@ -166,7 +163,6 @@ export class OperationalTransformationService {
                 newEL += netNewLineNumberChange;
             }
         }
-
         next.range = new MonacoRange(newSC, newEC, newSL, newEL);
         return next;
     }
