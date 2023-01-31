@@ -36,7 +36,7 @@ export class OperationalTransformationService {
     private getRelevantHistory(revID: number, history: Map<number, StringChangeRequest[]>): StringChangeRequest[] {
         let relevantRequests: StringChangeRequest[] = [];
         history.forEach((list, id) => {
-            if (id >= revID) {
+            if (id > revID) {
                 relevantRequests = [...relevantRequests, ...list];
             }
         });
@@ -61,7 +61,6 @@ export class OperationalTransformationService {
             
             for (let i = 0; i < relevantHistory.length; i++) {
                 let historicalRequest: StringChangeRequest = relevantHistory[i];
-
                 if (request.identity !== historicalRequest.identity) {
                     let pair: StringChangeRequest[] = this.monacoService.resolveConflictingRanges(historicalRequest, currentRequest[0]);
                     if (currentRequest[1] < i) {
@@ -79,7 +78,6 @@ export class OperationalTransformationService {
                     currentRequest[0] = this.transformOperation(newHistoralRequest, currentRequest[0]);
                 }
             }
-            
             transformedRequests.push(currentRequest[0]);
         }
         return transformedRequests;
@@ -101,7 +99,6 @@ export class OperationalTransformationService {
         if (numberOfNewLinesInPrev > 0) {
             prevTextLengthAfterLastNewLine = prev.text.length - prev.text.lastIndexOf("\n") - 1;
         }
-
         if (this.monacoService.isPreviousRequestRelevant(prev.range, next.range)) {
             let netNewLineNumberChange: number = numberOfNewLinesInPrev
                     - (prev.range.endLineNumber - prev.range.startLineNumber);

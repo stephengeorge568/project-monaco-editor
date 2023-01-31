@@ -41,6 +41,9 @@ export class EditorComponent implements OnInit {
 
     isSaveError: boolean = false;
 
+    // Flag to detect if a manual change is being saved to history
+    isManualActive: boolean = false;
+
     constructor(private editorService: EditorService, 
                 private otService: OperationalTransformationService, 
                 private websocketService: WebsocketService,
@@ -109,17 +112,15 @@ export class EditorComponent implements OnInit {
      */
     subscriptions(): void {
         // This subscription manages incoming changes from other clients
-        
         this.editorService.stringChangeRequestSubject.subscribe((operation: StringChangeRequest) => {
-            console.log(operation);
+            //console.error(operation.text);
+            while(this.isManualActive) {}
+            //console.log(operation);
             if (operation.documentId !== -1) {
                 let transformed: StringChangeRequest[] = this.otService.transform(operation);
                 
                 for (var request of transformed) {
-                    console.log(request);
-                    console.log(this.otService.history);
-                    console.log('---------------------------------------------------------');
-                    this.otService.insertRequestIntoHistory(request);
+                    //console.log(request);
                     this.isProgrammaticChange = true;
                     this.editor.getModel()?.applyEdits([{
                         forceMoveMarkers: true,
@@ -132,7 +133,9 @@ export class EditorComponent implements OnInit {
                         text: request.text
                     }]);
                     this.isProgrammaticChange = false;
+                    this.otService.insertRequestIntoHistory(request);
                     
+                    //console.log('---------------------------------------------------------');
                 }
                 if (operation.setID != undefined && operation.setID > this.otService.revID)
                     this.otService.revID = operation.setID;
@@ -143,25 +146,26 @@ export class EditorComponent implements OnInit {
         });
 
         // This subscription manages changes found on the local editor
-        this.localEditorChangeSubscription = this.editor.getModel().onDidChangeContent((event: monaco.editor.IModelContentChangedEvent) => { 
-            let opRange: monaco.IRange = event.changes[0].range;
-            let request: StringChangeRequest = new StringChangeRequest(
-                new Date().toISOString(), 
-                event.changes[0].text, 
-                this.editorService.clientIdentity, 
-                new MonacoRange(
-                    opRange.endColumn, 
-                    opRange.startColumn, 
-                    opRange.endLineNumber, 
-                    opRange.startLineNumber), 
-                this.otService.revID,
-                this.documentId,
-                0,
-                this.documentPassword);
-
-            
+        this.localEditorChangeSubscription = this.editor.getModel().onDidChangeContent((event: monaco.editor.IModelContentChangedEvent) => {  
             if (!this.isProgrammaticChange) {
+                this.isManualActive = true;
+                let opRange: monaco.IRange = event.changes[0].range;
+                let request: StringChangeRequest = new StringChangeRequest(
+                    new Date().toISOString(), 
+                    event.changes[0].text, 
+                    this.editorService.clientIdentity, 
+                    new MonacoRange(
+                        opRange.endColumn, 
+                        opRange.startColumn, 
+                        opRange.endLineNumber, 
+                        opRange.startLineNumber), 
+                    this.otService.revID,
+                    this.documentId,
+                    0,
+                    this.documentPassword);
+
                 this.otService.insertRequestIntoHistory(request);
+                this.isManualActive = false;
                 this.editorService.insertChangeIntoQueue(request);
                 if (!this.editorService.isAwaitingChangeResponse) {
                     this.editorService.sendNextChangeRequest();

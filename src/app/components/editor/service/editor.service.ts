@@ -66,6 +66,7 @@ export class EditorService {
     public cacheIdentity(): void {
         this.http.get<number>(this.serverIP + "/api/ot/identity").subscribe(response => {
             this.clientIdentity = response;
+            console.log(`Identity: ${this.clientIdentity}`);
             this.isAwaitingIdentityResponse = false;
         },
         err => {
