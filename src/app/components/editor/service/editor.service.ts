@@ -105,6 +105,7 @@ export class EditorService {
     public sendOperation(request: StringChangeRequest | undefined): void {
         if (request != undefined) {
             this.isAwaitingChangeResponse = true;
+            //request.revID = this.otService.revID;
             this.http.post<number>(this.serverIP + "/api/ot/change", request).subscribe(response => {
                 this.otService.revID = response;
                 this.isAwaitingChangeResponse = false;

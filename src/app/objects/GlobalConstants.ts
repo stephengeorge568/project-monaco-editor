@@ -8,4 +8,5 @@ export class GlobalConstants {
     // prod ip
     public static publicServerAddress: string = "https://stepheng.dev:8443";
     public static disableStompLogging = () => {};
+    public static appVersion: string = "0.0.8";
 }

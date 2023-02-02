@@ -56,12 +56,14 @@ export class OperationalTransformationService {
         toTransformQueue.enqueue([request, -1]);
 
         let currentRequest: [StringChangeRequest, number] | undefined;
+        
         while((currentRequest = toTransformQueue.dequeue()) != undefined) {
             let relevantHistory: StringChangeRequest[] = this.getRelevantHistory(request.revID, this.history);
             
             for (let i = 0; i < relevantHistory.length; i++) {
                 let historicalRequest: StringChangeRequest = relevantHistory[i];
                 if (request.identity !== historicalRequest.identity) {
+                    
                     let pair: StringChangeRequest[] = this.monacoService.resolveConflictingRanges(historicalRequest, currentRequest[0]);
                     if (currentRequest[1] < i) {
                         currentRequest[0] = this.transformOperation(historicalRequest, pair[0]);

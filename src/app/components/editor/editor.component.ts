@@ -115,12 +115,10 @@ export class EditorComponent implements OnInit {
         this.editorService.stringChangeRequestSubject.subscribe((operation: StringChangeRequest) => {
             //console.error(operation.text);
             while(this.isManualActive) {}
-            //console.log(operation);
             if (operation.documentId !== -1) {
                 let transformed: StringChangeRequest[] = this.otService.transform(operation);
-                
+                console.log(transformed[0]);
                 for (var request of transformed) {
-                    //console.log(request);
                     this.isProgrammaticChange = true;
                     this.editor.getModel()?.applyEdits([{
                         forceMoveMarkers: true,
@@ -134,8 +132,6 @@ export class EditorComponent implements OnInit {
                     }]);
                     this.isProgrammaticChange = false;
                     this.otService.insertRequestIntoHistory(request);
-                    
-                    //console.log('---------------------------------------------------------');
                 }
                 if (operation.setID != undefined && operation.setID > this.otService.revID)
                     this.otService.revID = operation.setID;

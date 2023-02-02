@@ -5,6 +5,7 @@ import { NgxEditorModel } from 'ngx-monaco-editor';
 import {MatButtonModule} from '@angular/material/button'; 
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from '@angular/platform-browser';
+import { GlobalConstants } from './objects/GlobalConstants';
 
 @Component({
 	selector: 'app-root',
@@ -14,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppComponent {
 
 	constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer){
+		console.log(`App Version: ${GlobalConstants.appVersion}`);
 		this.matIconRegistry.addSvgIcon(
 		  `github`,
 		  this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/github.svg")
