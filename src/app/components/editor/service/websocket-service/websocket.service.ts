@@ -25,9 +25,7 @@ export class WebsocketService {
     cachedDocumentId: number = -1;
 
     constructor(private editorService: EditorService, private otService: OperationalTransformationService) {
-        if (isDevMode()) {
-            this.serverIP = GlobalConstants.devServerAddress;
-        } else this.serverIP = GlobalConstants.publicServerAddress;
+        this.serverIP = GlobalConstants.publicServerAddress;
     }
 
     public recieveFromWebSocket(request: any) {      
@@ -40,7 +38,7 @@ export class WebsocketService {
 
     public connectWebSocket(id: number): void {
         this.cachedDocumentId = id;
-        let socket = new SockJS(this.serverIP + '/ws');
+        let socket = new SockJS(this.serverIP + '/api/ws');
         this.stompClient = Stomp.over(socket);
         this.stompClient.debug = GlobalConstants.disableStompLogging;
         const _this = this;

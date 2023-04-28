@@ -44,9 +44,7 @@ export class EditorService {
 
     constructor(private http: HttpClient, private otService: OperationalTransformationService) {
 
-        if (isDevMode()) {
-            this.serverIP = GlobalConstants.devServerAddress;
-        } else this.serverIP = GlobalConstants.publicServerAddress;
+        this.serverIP = GlobalConstants.publicServerAddress;
 
         this.isAwaitingChangeResponse = false;
         this.isAwaitingIdentityResponse = true;

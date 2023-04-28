@@ -17,8 +17,7 @@ export class DocumentService {
   idPassMap: Map<number, string>;
 
   constructor(private http: HttpClient) {
-    if (isDevMode()) this.serverIP = GlobalConstants.devServerAddress;
-    else this.serverIP = GlobalConstants.publicServerAddress;
+    this.serverIP = GlobalConstants.publicServerAddress;
 
     this.idPassMap = new Map();
   }
